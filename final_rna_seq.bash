@@ -1,0 +1,70 @@
+#!/bin/bash
+
+# --- CONFIGURATION ---
+SRRS=(SRR30570749 SRR30570750 SRR30570751 SRR30570752)
+GENOME_INDEX="/home/mimansa/RNA_PROJECT/whole_genome/yeast_reference_index"
+GTF_ANNOTATION="/home/mimansa/RNA_PROJECT/whole_genome/Saccharomyces_cerevisiae.R64-1-1.115.gtf"
+RAW_READS="/home/mimansa/RNA_PROJECT/raw_reads"
+QC_PRE="/home/mimansa/RNA_PROJECT/fastqc_reports/pretrim"
+QC_POST="/home/mimansa/RNA_PROJECT/fastqc_reports/posttrim"
+TRIMMED_READS="/home/mimansa/RNA_PROJECT/trimmed_reads"
+ALIGNMENTS="/home/mimansa/RNA_PROJECT/alignments"
+RESULTS="/home/mimansa/RNA_PROJECT/results"
+
+# Trimmomatic JAR and Nextera adapter file (for Nextera libraries)
+TRIMMOMATIC_JAR="$CONDA_PREFIX/share/trimmomatic-*/trimmomatic.jar"
+ADAPTERS="/home/mimansa/miniconda3/envs/RNA_SEQ/share/trimmomatic-0.40-0/adapters/NexteraPE-PE.fa"
+
+mkdir -p $RAW_READS $QC_PRE $QC_POST $TRIMMED_READS $ALIGNMENTS $RESULTS
+
+# --- STEP 1: Download SRA FASTQ files (gzip) ---
+echo "Step 1: Downloading FASTQ files from SRA"
+for srr in "${SRRS[@]}"; do
+    fastq-dump --split-files --gzip -O $RAW_READS $srr
+done
+
+# --- STEP 2: QC raw reads (FastQC) ---
+echo "Step 2: FastQC on raw FASTQ"
+fastqc -o $QC_PRE $RAW_READS/*_1.fastq.gz $RAW_READS/*_2.fastq.gz
+
+
+# --- STEP 3: Trimming with Trimmomatic using Nextera adapters ---
+echo "Step 2: Trimming with Trimmomatic"
+for srr in "${SRRS[@]}"; do
+    trimmomatic PE -threads 4 \
+        "$RAW_READS/${srr}_1.fastq.gz" "$RAW_READS/${srr}_2.fastq.gz" \
+        "$TRIMMED_READS/${srr}_1_paired.fq.gz" "$TRIMMED_READS/${srr}_1_unpaired.fq.gz" \
+        "$TRIMMED_READS/${srr}_2_paired.fq.gz" "$TRIMMED_READS/${srr}_2_unpaired.fq.gz" \
+        ILLUMINACLIP:"$ADAPTERS":2:30:10 SLIDINGWINDOW:4:20 MINLEN:50
+done
+
+# --- STEP 4: FastQC on trimmed FASTQ ---
+echo "Step 3: FastQC on trimmed FASTQ"
+for srr in "${SRRS[@]}"; do
+    fastqc -o "$QC_POST" "$TRIMMED_READS/${srr}_1_paired.fq.gz" "$TRIMMED_READS/${srr}_2_paired.fq.gz"
+done
+
+echo "Check $QC_POST for FastQC HTMLs after trimming."
+read -p "If adapters or GC bias remain, STOP and re-trim with updated options. Press Enter to continue ONLY if QC is satisfactory..."
+
+# --- STEP 5: Alignment to reference (HISAT2) ---
+echo "Step 4: Alignment to reference (HISAT2)"
+for srr in "${SRRS[@]}"; do
+    hisat2 -x "$GENOME_INDEX" \
+        -1 "$TRIMMED_READS/${srr}_1_paired.fq.gz" \
+        -2 "$TRIMMED_READS/${srr}_2_paired.fq.gz" \
+        -S "$ALIGNMENTS/${srr}.sam"
+done
+
+
+# --- STEP 6: Sort and index BAM files ---
+echo "Step 5: BAM conversion, sorting, and indexing"
+for srr in "${SRRS[@]}"; do
+    samtools sort -o "$ALIGNMENTS/${srr}.sorted.bam" "$ALIGNMENTS/${srr}.sam"
+    samtools index "$ALIGNMENTS/${srr}.sorted.bam"
+done
+
+# --- STEP 7: featureCounts paired-end counting ---
+echo "Step 6: Counting with featureCounts"
+featureCounts -p -B -a "$GTF_ANNOTATION" -o "$RESULTS/counts.txt" "$ALIGNMENTS"/*.sorted.bam
+echo "All done! Final gene counts table: $RESULTS/counts.txt"

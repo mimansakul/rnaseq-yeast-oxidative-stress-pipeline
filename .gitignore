@@ -1,0 +1,9 @@
+*.fastq
+*.fq
+*.bam
+*.sam
+*.gz
+*.zip
+*.fa
+*.fasta
+*.html

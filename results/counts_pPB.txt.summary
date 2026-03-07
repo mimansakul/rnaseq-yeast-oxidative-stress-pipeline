@@ -1,0 +1,15 @@
+Status	/home/mimansa/RNA_PROJECT/alignments/SRR30570749.sorted.bam	/home/mimansa/RNA_PROJECT/alignments/SRR30570750.sorted.bam	/home/mimansa/RNA_PROJECT/alignments/SRR30570751.sorted.bam	/home/mimansa/RNA_PROJECT/alignments/SRR30570752.sorted.bam
+Assigned	22003836	18527392	19573938	19157353
+Unassigned_Unmapped	1028667	778677	890669	1017180
+Unassigned_Read_Type	0	0	0	0
+Unassigned_Singleton	0	0	0	0
+Unassigned_MappingQuality	0	0	0	0
+Unassigned_Chimera	0	0	0	0
+Unassigned_FragmentLength	0	0	0	0
+Unassigned_Duplicate	0	0	0	0
+Unassigned_MultiMapping	4878892	5770377	4904787	5145915
+Unassigned_Secondary	0	0	0	0
+Unassigned_NonSplit	0	0	0	0
+Unassigned_NoFeatures	800299	641660	599604	616320
+Unassigned_Overlapping_Length	0	0	0	0
+Unassigned_Ambiguity	1259114	1030994	1062381	1030840
