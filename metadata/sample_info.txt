@@ -1,0 +1,5 @@
+SampleID    Condition
+SRR30570749 Treatment
+SRR30570750 Treatment
+SRR30570751 Control
+SRR30570752 Control
