@@ -101,7 +101,7 @@ rna-seq-yeast-oxidative-stress-pipeline
 
 The RNA-seq workflow is automated using **Bash scripts executed in a Linux environment**.
 
-### Example pipeline execution
+### Example Pipeline Execution
 
 ```bash
 bash scripts/rnaseq_pipeline_full.sh
@@ -139,8 +139,10 @@ Run differential expression testing
 Filter significant genes
 
 Filtering Criteria
+
 Adjusted p-value < 0.05
 |log2FoldChange| > 1
+
 Visualization
 
 Multiple visualizations were generated to interpret gene expression changes:
@@ -190,4 +192,5 @@ Biological data visualization and interpretation
 Author
 
 Mimansa Kulshrestha
+MSc Bioinformatics
 MSc Bioinformatics
