@@ -1,198 +1,177 @@
+### RNA-Seq Transcriptomic Profiling Pipeline
+Saccharomyces cerevisiae Oxidative Stress Analysis
 
-### RNA-Seq Transcriptomic Profiling Pipeline  
-## Saccharomyces cerevisiae Oxidative Stress Analysis
+Author: Mimansa Kulshrestha
+MSc Bioinformatics
 
-**Author:** Mimansa Kulshrestha  
-MSc Bioinformatics  
+### Project Overview
 
----
+- This project implements an automated RNA-seq analysis pipeline to study transcriptomic changes in Saccharomyces cerevisiae under oxidative stress conditions.
 
-# Project Overview
+- Oxidative stress occurs when reactive oxygen species (ROS), such as hydrogen peroxide, accumulate and damage cellular components including proteins, lipids, and DNA. Yeast cells respond to oxidative stress through activation of antioxidant enzymes, metabolic rewiring, and stress-response pathways.
 
-This project implements an automated RNA-seq analysis pipeline to study transcriptomic changes in *Saccharomyces cerevisiae* under oxidative stress conditions.
+- This pipeline processes raw sequencing reads obtained from the NCBI Sequence Read Archive (SRA) and generates gene-level expression counts for downstream differential expression analysis.
 
-Oxidative stress occurs when reactive oxygen species (ROS) such as hydrogen peroxide accumulate and damage cellular components including proteins, lipids, and DNA. Yeast cells respond to oxidative stress through activation of antioxidant enzymes, metabolic rewiring, and stress response pathways.
+- The workflow automates major RNA-seq processing steps using Bash scripting and standard bioinformatics tools in a Linux environment.
 
-This pipeline processes raw sequencing reads obtained from the NCBI Sequence Read Archive (SRA) and generates gene-level expression counts for downstream differential expression analysis.
+### Dataset Information
 
-The workflow automates major RNA-seq processing steps using Bash scripting and standard bioinformatics tools in a Linux environment.
-
----
-
-# Dataset Information
-
-Organism: *Saccharomyces cerevisiae*
+Organism: Saccharomyces cerevisiae
 
 Data Source: NCBI Sequence Read Archive (SRA)
 
-Samples used in the analysis:
-
-| Sample ID | Condition |
-|-----------|-----------|
-| SRR30570749 | Treatment |
-| SRR30570750 | Treatment |
-| SRR30570751 | Control |
-| SRR30570752 | Control |
+Samples Used
+Sample ID	Condition
+SRR30570749	Treatment
+SRR30570750	Treatment
+SRR30570751	Control
+SRR30570752	Control
 
 Treatment samples represent yeast exposed to oxidative stress conditions, while control samples represent normal parental yeast strains.
 
----
-
-# RNA-Seq Pipeline Workflow
-
-
+### RNA-Seq Pipeline Workflow
 SRA Download
-│
-▼
+     ↓
 FastQC (Quality Control)
-│
-▼
+     ↓
 Trimmomatic (Adapter & Quality Trimming)
-│
-▼
+     ↓
 HISAT2 (Genome Alignment)
-│
-▼
+     ↓
 SAMtools (BAM Processing)
-│
-▼
+     ↓
 featureCounts (Gene Quantification)
-│
-▼
-Gene Count Matrix
-│
-▼
+     ↓
+Gene Count Matrix Generation
+     ↓
 DESeq2 (Differential Expression Analysis)
-│
-▼
+     ↓
 Visualization (Volcano Plot, Heatmap, MA Plot)
 
+### Tools Used
+Tool	Purpose
+SRA Toolkit	Download sequencing data
+FastQC	Quality control of sequencing reads
+Trimmomatic	Adapter removal and quality trimming
+HISAT2	Alignment of reads to reference genome
+SAMtools	SAM/BAM file processing and indexing
+featureCounts	Gene-level read quantification
+DESeq2	Differential gene expression analysis
+R (ggplot2, pheatmap)	Visualization and statistical analysis
 
----
-
-# Tools Used
-
-The pipeline integrates widely used bioinformatics tools:
-
-| Tool | Purpose |
-|-----|------|
-| SRA Toolkit | Download sequencing data |
-| FastQC | Quality control of sequencing reads |
-| Trimmomatic | Adapter removal and quality trimming |
-| HISAT2 | Alignment of reads to reference genome |
-| SAMtools | SAM/BAM file processing and indexing |
-| featureCounts | Gene-level read counting |
-| DESeq2 | Differential gene expression analysis |
-| R (ggplot2, pheatmap) | Visualization and statistical analysis |
-
----
-
-# Repository Structure
-
-
+### Repository Structure
 rna-seq-yeast-oxidative-stress-pipeline
 │
 ├── README.md
 ├── .gitignore
 │
 ├── scripts
-│ ├── rnaseq_pipeline_full.sh
-│ ├── feature_count.sh
-│ └── post_align.sh
+│   ├── rnaseq_pipeline_full.sh
+│   ├── feature_count.sh
+│   └── post_align.sh
 │
 ├── qc_reports
-│ ├── pretrim
-│ └── posttrim
+│   ├── pretrim
+│   └── posttrim
 │
 ├── results
-│ ├── counts_filtered
-│ ├── counts_pPB
-│ └── deseq2_analysis.R
+│   ├── counts_filtered
+│   ├── counts_pPB
+│   └── deseq2_analysis.R
 │
-├── metadata
-│ └── sample_info.txt
+└── metadata
+    └── sample_info.txt
 
-
----
-
-# Automation
+### Automation
 
 The RNA-seq workflow is automated using Bash scripts executed in a Linux environment.
 
-Example pipeline execution:
-
-```bash
+Example pipeline execution
 bash scripts/rnaseq_pipeline_full.sh
 
 This script performs the following steps automatically:
 
-Download raw FASTQ files from SRA
+- Download raw FASTQ files from SRA
 
-Run FastQC quality control
+- Perform quality control using FastQC
 
-Perform adapter trimming using Trimmomatic
+- Trim adapters using Trimmomatic
 
-Align reads to the yeast reference genome using HISAT2
+- Align reads to the yeast reference genome using HISAT2
 
-Convert and sort alignment files using SAMtools
+- Convert and sort alignment files using SAMtools
 
-Quantify gene-level reads using featureCounts
+- Quantify gene-level reads using featureCounts
 
-Differential Expression Analysis
+- Perform differential expression analysis using DESeq2 in R
+
+### Differential Expression Analysis
 
 Differential expression analysis was performed using the DESeq2 package in R.
 
-Analysis steps include:
+Analysis Steps
 
-Loading filtered gene count matrix
+- Load filtered gene count matrix
 
-Creating sample metadata
+- Create sample metadata
 
-Constructing DESeq2 dataset
+- Construct DESeq2 dataset
 
-Running differential expression testing
+- Run differential expression testing
 
-Filtering significant genes
+- Filter significant genes
 
-Filtering criteria:
-
+### Filtering Criteria
 Adjusted p-value < 0.05
 |log2FoldChange| > 1
-Visualization
+
+### Visualization
 
 Multiple visualizations were generated to interpret gene expression changes:
 
-• Volcano plots
-• Heatmaps of differentially expressed genes
-• MA plots for global expression changes
-• Violin plots for gene expression distribution
+- Volcano plots
+
+- Heatmaps of differentially expressed genes
+
+- MA plots for global expression changes
+
+Violin plots for gene expression distribution
 
 These plots help identify genes significantly regulated during oxidative stress.
 
-Key Outcome
+### Key Outcome
 
-The analysis identifies genes whose expression levels significantly change in response to oxidative stress in Saccharomyces cerevisiae. These genes may play important roles in stress response pathways, antioxidant defense mechanisms, and cellular adaptation processes.
+The analysis identifies genes whose expression levels significantly change in response to oxidative stress in Saccharomyces cerevisiae.
 
-Note on Data Availability
+These results provide insights into stress-response pathways and cellular adaptation mechanisms.
+
+### Data Availability
 
 Due to GitHub file size limitations, the following files are not included in this repository:
 
-• Raw FASTQ files
-• Alignment BAM files
-• Reference genome files
+- Raw FASTQ files
 
-These can be downloaded from NCBI SRA using the accession numbers listed above.
+- Alignment BAM files
 
-Skills Demonstrated
+- Reference genome files
+
+These datasets can be downloaded from NCBI SRA using the accession numbers listed above.
+
+### Skills Demonstrated
 
 This project demonstrates practical experience in:
 
-• RNA-seq data analysis
-• Linux-based bioinformatics workflows
-• Bash scripting for pipeline automation
-• NGS data processing
-• Differential gene expression analysis
-• Data visualization and interpretation
+- RNA-seq data analysis
+
+- Linux-based bioinformatics workflows
+
+- Bash scripting for pipeline automation
+
+- NGS data processing
+
+- Differential gene expression analysis
+
+- Biological data visualization and interpretation
 
 Author
 
