@@ -2,8 +2,6 @@
 
 ## Saccharomyces cerevisiae Oxidative Stress Analysis
 
-**Author:** Mimansa Kulshrestha  
-**Degree:** MSc Bioinformatics
 
 ---
 
