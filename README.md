@@ -1,34 +1,46 @@
-RNA-Seq Transcriptomic Profiling Pipeline
-Saccharomyces cerevisiae Oxidative Stress Analysis
+# RNA-Seq Transcriptomic Profiling Pipeline
 
-Author: Mimansa Kulshrestha
-Degree: MSc Bioinformatics
+## Saccharomyces cerevisiae Oxidative Stress Analysis
 
-Project Overview
+**Author:** Mimansa Kulshrestha  
+**Degree:** MSc Bioinformatics
 
-This project implements an automated RNA-seq analysis pipeline to study transcriptomic changes in Saccharomyces cerevisiae under oxidative stress conditions.
+---
 
-Oxidative stress occurs when reactive oxygen species (ROS) such as hydrogen peroxide accumulate and damage cellular components including proteins, lipids, and DNA. Yeast cells respond to oxidative stress through activation of antioxidant enzymes, metabolic rewiring, and stress-response pathways.
+## Project Overview
 
-The pipeline processes raw sequencing reads obtained from the NCBI Sequence Read Archive (SRA) and generates gene-level expression counts for downstream differential expression analysis.
+This project implements an **automated RNA-seq analysis pipeline** to study transcriptomic changes in *Saccharomyces cerevisiae* under oxidative stress conditions.
 
-The workflow automates major RNA-seq processing steps using Bash scripting and standard bioinformatics tools in a Linux environment.
+Oxidative stress occurs when **reactive oxygen species (ROS)** such as hydrogen peroxide accumulate and damage cellular components including proteins, lipids, and DNA. Yeast cells respond to oxidative stress through activation of antioxidant enzymes, metabolic rewiring, and stress-response pathways.
 
-Dataset Information
+The pipeline processes raw sequencing reads obtained from the **NCBI Sequence Read Archive (SRA)** and generates gene-level expression counts for downstream **differential expression analysis**.
 
-Organism: Saccharomyces cerevisiae
-Data Source: NCBI Sequence Read Archive (SRA)
+The workflow automates major RNA-seq processing steps using **Bash scripting and standard bioinformatics tools in a Linux environment**.
 
-Samples Used
-Sample ID	Condition
-SRR30570749	Treatment
-SRR30570750	Treatment
-SRR30570751	Control
-SRR30570752	Control
+---
+
+## Dataset Information
+
+**Organism:** *Saccharomyces cerevisiae*  
+
+**Data Source:** NCBI Sequence Read Archive (SRA)
+
+### Samples Used
+
+| Sample ID | Condition |
+|-----------|-----------|
+| SRR30570749 | Treatment |
+| SRR30570750 | Treatment |
+| SRR30570751 | Control |
+| SRR30570752 | Control |
 
 Treatment samples represent yeast exposed to oxidative stress conditions, while control samples represent normal parental yeast strains.
 
-RNA-Seq Pipeline Workflow
+---
+
+## RNA-Seq Pipeline Workflow
+
+
 SRA Download
 FastQC (Quality Control)
 Trimmomatic (Adapter & Quality Trimming)
@@ -38,43 +50,60 @@ featureCounts (Gene Quantification)
 Gene Count Matrix Generation
 DESeq2 (Differential Expression Analysis)
 Visualization (Volcano Plot, Heatmap, MA Plot)
-Tools Used
-Tool	Purpose
-SRA Toolkit	Download sequencing data
-FastQC	Quality control of sequencing reads
-Trimmomatic	Adapter removal and quality trimming
-HISAT2	Alignment of reads to reference genome
-SAMtools	SAM/BAM file processing and indexing
-featureCounts	Gene-level read quantification
-DESeq2	Differential gene expression analysis
-R (ggplot2, pheatmap)	Visualization and statistical analysis
-Repository Structure
+
+
+---
+
+## Tools Used
+
+| Tool | Purpose |
+|------|--------|
+| **SRA Toolkit** | Download sequencing data |
+| **FastQC** | Quality control of sequencing reads |
+| **Trimmomatic** | Adapter removal and quality trimming |
+| **HISAT2** | Alignment of reads to reference genome |
+| **SAMtools** | SAM/BAM file processing and indexing |
+| **featureCounts** | Gene-level read quantification |
+| **DESeq2** | Differential gene expression analysis |
+| **R (ggplot2, pheatmap)** | Visualization and statistical analysis |
+
+---
+
+## Repository Structure
+
+
 rna-seq-yeast-oxidative-stress-pipeline
 │
 ├── README.md
 ├── .gitignore
 │
 ├── scripts
-│   ├── rnaseq_pipeline_full.sh
-│   ├── feature_count.sh
-│   └── post_align.sh
+│ ├── rnaseq_pipeline_full.sh
+│ ├── feature_counts.sh
+│ └── post_align.sh
 │
 ├── qc_reports
-│   ├── pretrim
-│   └── posttrim
+│ ├── pretrim
+│ └── posttrim
 │
 ├── results
-│   ├── counts_filtered
-│   ├── counts_pPB
-│   └── deseq2_analysis.R
+│ ├── counts_filtered
+│ ├── counts_ppb
+│ └── deseq2_analysis.R
 │
 └── metadata
-    └── sample_info.txt
-Automation
+└── sample_info.txt
 
-The RNA-seq workflow is automated using Bash scripts executed in a Linux environment.
 
-Example pipeline execution
+---
+
+## Automation
+
+The RNA-seq workflow is automated using **Bash scripts executed in a Linux environment**.
+
+### Example pipeline execution
+
+```bash
 bash scripts/rnaseq_pipeline_full.sh
 
 This script performs the following steps automatically:
