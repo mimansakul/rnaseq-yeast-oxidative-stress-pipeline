@@ -17,7 +17,6 @@ The workflow automates major RNA-seq processing steps using Bash scripting and s
 Dataset Information
 
 Organism: Saccharomyces cerevisiae
-
 Data Source: NCBI Sequence Read Archive (SRA)
 
 Samples Used
@@ -31,21 +30,13 @@ Treatment samples represent yeast exposed to oxidative stress conditions, while 
 
 RNA-Seq Pipeline Workflow
 SRA Download
-   ↓
 FastQC (Quality Control)
-   ↓
 Trimmomatic (Adapter & Quality Trimming)
-   ↓
 HISAT2 (Genome Alignment)
-   ↓
 SAMtools (BAM Processing)
-   ↓
 featureCounts (Gene Quantification)
-   ↓
 Gene Count Matrix Generation
-   ↓
 DESeq2 (Differential Expression Analysis)
-   ↓
 Visualization (Volcano Plot, Heatmap, MA Plot)
 Tools Used
 Tool	Purpose
@@ -154,8 +145,6 @@ Reference genome files
 These datasets can be downloaded from NCBI SRA using the accession numbers listed above.
 
 Skills Demonstrated
-
-This project demonstrates practical experience in:
 
 RNA-seq data analysis
 
