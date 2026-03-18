@@ -76,24 +76,22 @@ rna-seq-yeast-oxidative-stress-pipeline
 ├── .gitignore
 │
 ├── scripts
-│   ├── rnaseq_pipeline_full.sh
-│   ├── feature_counts.sh
-│   └── post_align.sh
+│ ├── rnaseq_pipeline_full.sh
+│ ├── feature_counts.sh
+│ └── post_align.sh
 │
 ├── qc_reports
-│   ├── pretrim
-│   └── posttrim
+│ ├── pretrim
+│ └── posttrim
 │
 ├── results
-│   ├── counts_filtered
-│   ├── counts_ppb
-│   └── deseq2_analysis.R
+│ ├── counts_filtered
+│ ├── counts_ppb
+│ └── deseq2_analysis.R
 │
 └── metadata
-    └── sample_info.txt
+└── sample_info.txt
 
-
----
 
 ## Automation
 
